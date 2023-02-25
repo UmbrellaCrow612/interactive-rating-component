@@ -12,12 +12,10 @@ export default function Page() {
   const numbers = [1, 2, 3, 4, 5];
   const [chosenNumber, setChosenNumber] = useState<any>(null);
 
-  const handleBlur = () => {
-    setChosenNumber(null);
-  };
-
-  const handleSubmit = () => {
-    console.log(chosenNumber);
+  const handleSubmit = (chosenNumber: any) => {
+    if (chosenNumber === null) {
+      alert("Rating is empty please select one before submitting it");
+    }
   };
 
   return (
@@ -47,18 +45,20 @@ export default function Page() {
           <div className="flex items-center w-full justify-between p-2">
             {numbers.map((item) => (
               <button
-                className="bg-[#282D39] transition-all ease-in-out hover:bg-[#fb7413] rounded-full w-[3rem] h-[3rem] focus:bg-[#fb7413]"
+                className={` ${
+                  chosenNumber == item ? "bg-[#fb7413]" : "bg-[#282D39]"
+                } transition-all ease-in-out hover:bg-[#fb7413] rounded-full w-[3rem] h-[3rem]`}
                 key={item}
                 onClick={() => setChosenNumber(item)}
+                onDoubleClick={() => setChosenNumber(null)}
               >
                 {item}
               </button>
             ))}
           </div>
           <button
-            className="w-full py-2 bg-[#fb7413] rounded-3xl hover:bg-white hover:text-[#fb7413] transition-all ease-in-out"
-            onClick={handleSubmit}
-            onBlur={handleBlur}
+            className={`w-full py-2 bg-[#fb7413] rounded-3xl hover:bg-white hover:text-[#fb7413] transition-all ease-in-out`}
+            onClick={() => handleSubmit(chosenNumber)}
           >
             Submit
           </button>
