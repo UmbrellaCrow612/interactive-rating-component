@@ -1,7 +1,8 @@
 import Head from "next/head";
 import { Overpass } from "@next/font/google";
 import { AiFillStar } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const overpass = Overpass({
   subsets: ["latin"],
@@ -11,12 +12,20 @@ const overpass = Overpass({
 export default function Page() {
   const numbers = [1, 2, 3, 4, 5];
   const [chosenNumber, setChosenNumber] = useState<any>(null);
+  const router = useRouter();
 
   const handleSubmit = (chosenNumber: any) => {
     if (chosenNumber === null) {
       alert("Rating is empty please select one before submitting it");
+    } else {
+      localStorage.setItem("chosenRating", chosenNumber);
+      router.push("/success");
     }
   };
+
+  useEffect(() => {
+    localStorage.removeItem("chosenRating");
+  }, []);
 
   return (
     <>
